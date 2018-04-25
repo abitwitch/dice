@@ -1,0 +1,163 @@
+<html>
+
+<head>
+    <title>Dice</title>
+
+    <style>
+        body {
+            background-color: #191919;
+        }
+
+        div {
+            font-weight: 900;
+            font-size: 45px;
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        div.fade {
+            opacity: 0;
+        }
+
+        div.active {
+            color: white;
+        }
+
+        div.passive {
+            color: #777;
+        }
+
+        #d04 {
+            text-shadow: 0 0 0.3em #7abe45
+        }
+
+        #d06 {
+            text-shadow: 0 0 0.3em #0181c8
+        }
+
+        #d08 {
+            text-shadow: 0 0 0.3em #ed0491
+        }
+
+        #d10 {
+            text-shadow: 0 0 0.3em #eb1754
+        }
+
+        #d12 {
+            text-shadow: 0 0 0.3em #54a3a0
+        }
+
+        #d20 {
+            text-shadow: 0 0 0.3em #d4a03b
+        }
+
+        td {
+            position: relative;
+            text-align: center;
+            color: white;
+            padding: 10px;
+        }
+
+        div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+        img {
+            overflow: hidden;
+            transition-duration: 0.8s;
+            transition-property: transform;
+        }
+
+        img.roll {
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>
+                <img src="d04.jpg" alt="d04" id="d04img">
+                <div class="passive" id="d04">4</div>
+            </td>
+            <td>
+                <img src="d06.jpg" alt="d06" id="d06img">
+                <div class="passive" id="d06">6</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="d08.jpg" alt="d08" id="d08img">
+                <div class="passive" id="d08">8</div>
+            </td>
+            <td>
+                <img src="d10.jpg" alt="d10" id="d10img">
+                <div class="passive" id="d10">10</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="d12.jpg" alt="d12" id="d12img">
+                <div class="passive" id="d12">12</div>
+            </td>
+            <td>
+                <img src="d20.jpg" alt="d20" id="d20img">
+                <div class="passive" id="d20">20</div>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <script>
+        var roll = function() {
+            //console.log("Button clicked, id "+this.id+", text"+this.innerHTML);
+            var id = this.getElementsByTagName("div")[0].id;
+            var idimg = this.getElementsByTagName("img")[0].id;
+            var id_num = parseInt(id.substring(1));
+            var rollResult = Math.floor(Math.random() * (id_num - 1 + 1)) + 1;
+            console.log(rollResult);
+            elems = document.getElementsByTagName('div');
+            for (var i = 0; i < elems.length; i++) {
+                if (elems[i].id == id) {
+                    elems[i].hidden = true;
+                    elems[i].classList.add('active');
+                    elems[i].classList.remove('passive');
+                    elems[i].innerText = rollResult;
+                    console.log(rollResult);
+                } else {
+                    elems[i].classList.remove('active');
+                    elems[i].classList.add('passive');
+                    elems[i].innerText = parseInt(elems[i].id.substring(1));
+                }
+            }
+
+            document.getElementById(idimg).classList.toggle('roll');
+            //document.getElementById(id).classList.add('fade');
+
+            setTimeout(function() {
+                document.getElementById(id).hidden = false;
+                //document.getElementById(id).classList.remove('fade');
+
+            }, 1000);
+
+        }
+
+        elems = document.getElementsByTagName('td');
+        for (var i = 0; i < elems.length; i++) {
+            elems[i].onclick = roll;
+        }
+    </script>
+
+
+</body>
+
+</html>
